@@ -4,6 +4,7 @@
 # docker tag dms-tasks:latest mdanshin/dms-tasks:latest
 # docker tag dms-tasks:latest mdanshin/dms-tasks:0.1.0
 # docker push mdanshin/dms-tasks:0.1.0
+# docker push mdanshin/dms-tasks:latest
 
 ########## STAGE 1 ##########
 FROM node as builder
