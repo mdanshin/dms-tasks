@@ -6,11 +6,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Provider } from './context/todo-context'
 
-
-
-
-
-
 function App() {
   const routes = useRoutes()
 

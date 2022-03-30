@@ -11,3 +11,5 @@ Dockerfile
 *.md
 build
 .devcontainer
+./server/.env
+
