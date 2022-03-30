@@ -1,14 +1,18 @@
-# docker stop dms-tasks
-# docker rm dms-tasks
-# docker system prune -a
-# docker build -t dms-tasks . //for dev
-# docker build -t mdanshin/dms-tasks:0.1.0 -t mdanshin/dms-tasks:latest . //for prod
+###FOR DEV###
+# docker stop dms-tasks; docker rm dms-tasks; docker system prune -a; docker build -t dms-tasks .
+
+###FOR PROD###
+# docker stop dms-tasks; docker rm dms-tasks; docker system prune -a; docker build -t mdanshin/dms-tasks:0.1.0 -t mdanshin/dms-tasks:latest .
+
+###FOR PUB###
 # docker tag dms-tasks:latest mdanshin/dms-tasks:latest
 # docker tag dms-tasks:latest mdanshin/dms-tasks:0.1.0
 # docker push mdanshin/dms-tasks:0.1.0
 # docker push mdanshin/dms-tasks:latest
 
 ########## STAGE 1 ##########
+##      Build frontend     ##
+#############################
 FROM node as builder
 
 WORKDIR /dms-tasks-client
@@ -22,11 +26,12 @@ COPY ./client .
 RUN npm run build
 
 ########## STAGE 2 ##########
+##     Build backkend      ##
+#############################
 FROM alpine:3.11
 
 ENV PORT=5000
 ENV CLIENT_URL=http://localhost
-# ENV NODE_ENV="production"
 ENV mongoUri=mongodb://localhost:27017/dms-tasks
 ENV REACT_APP_API_URL=http://localhost:5000/api
 
