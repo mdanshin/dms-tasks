@@ -1,5 +1,5 @@
 ###FOR DEV###
-# docker stop dms-tasks; docker rm dms-tasks; docker system prune -a; docker build -t dms-tasks .
+# docker stop dms-tasks; docker rm dms-tasks; docker system prune -a; docker build -t dms-tasks:dev .
 
 ###FOR PROD###
 # docker stop dms-tasks; docker rm dms-tasks; docker system prune -a; docker build -t mdanshin/dms-tasks:0.1.0 -t mdanshin/dms-tasks:latest .
@@ -14,6 +14,8 @@
 ##      Build frontend     ##
 #############################
 FROM node as builder
+
+ENV REACT_APP_API_URL=http://localhost:5000/api
 
 WORKDIR /dms-tasks-client
 
@@ -33,7 +35,6 @@ FROM alpine:3.11
 ENV PORT=5000
 ENV CLIENT_URL=http://localhost
 ENV mongoUri=mongodb://localhost:27017/dms-tasks
-ENV REACT_APP_API_URL=http://localhost:5000/api
 
 WORKDIR /usr/share/nginx/html
 
@@ -56,4 +57,5 @@ EXPOSE 80 5000
 
 CMD ["/bin/sh", "/start.sh"]
 
+# docker run -d --name dms-tasks --restart always --expose=5000 -p 80:80 -p 5000:5000 -e PORT=5000 -e REACT_APP_API_URL=http://localhost:5000/api -v ~/dms-tasks/db:/data/db/ dms-tasks:dev
 # docker run -d --restart always --name dms-tasks -p 80:80 -p 5000:5000 -v ~/dms-tasks/db:/data/db/ dms-tasks:latest

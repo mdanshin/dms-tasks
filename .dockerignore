@@ -12,4 +12,4 @@ Dockerfile
 build
 .devcontainer
 ./server/.env
-
+./client/.env
