@@ -28,7 +28,7 @@ COPY ./client .
 RUN npm run build
 
 ########## STAGE 2 ##########
-##     Build backkend      ##
+##     Build backend      ##
 #############################
 FROM alpine:3.11
 
@@ -40,10 +40,10 @@ WORKDIR /usr/share/nginx/html
 
 COPY ./server/package.json /dms-task-server/
 COPY --from=builder /dms-tasks-client/build .
-COPY ./client/nginx/default.conf /etc/nginx/http.d/default.conf
-COPY ./client/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY ./deploy/nginx/default.conf /etc/nginx/http.d/default.conf
+COPY ./deploy/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY ./server /dms-task-server/
-COPY ./start.sh /
+COPY ./deploy/start.sh /
 
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/main' >> /etc/apk/repositories && \
     echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories && \
