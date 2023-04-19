@@ -6,7 +6,7 @@ class TaskService {
       const task = await TaskModel.create({ ...data.body })
       return task
     } catch (e) {
-      throw new Error(e)  // how to handle error?
+      throw new Error(e)
     }
   }
 

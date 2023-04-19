@@ -6,7 +6,7 @@ export default class TaskService {
       return await $api.get('/tasks')
     } catch (error) {
       if (error.response) {
-        throw error.response  // how to handle error?
+        throw error.response
       }
     }
   }
@@ -16,7 +16,7 @@ export default class TaskService {
       return await $api.get(`/task/${id}`)
     } catch (error) {
       if (error.response) {
-        throw error.response  // how to handle error?
+        throw error.response
       }
     }
   }

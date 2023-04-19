@@ -16,7 +16,7 @@ export default function AddItem() {
             setTask({ name: '' })
             addTodoItem(newTask.data)
         } catch (e) {
-            console.log(e.statusText); // how to handle error?
+            console.log(e.statusText);
         }
     }
 

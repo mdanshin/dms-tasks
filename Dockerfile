@@ -5,9 +5,10 @@
 # docker stop dms-tasks; docker rm dms-tasks; docker system prune -a; docker build -t mdanshin/dms-tasks:0.1.0 -t mdanshin/dms-tasks:latest .
 
 ###FOR PUB###
+# docker login
 # docker tag dms-tasks:latest mdanshin/dms-tasks:latest
-# docker tag dms-tasks:latest mdanshin/dms-tasks:0.1.0
-# docker push mdanshin/dms-tasks:0.1.0
+# docker tag dms-tasks:latest mdanshin/dms-tasks:0.1.2
+# docker push mdanshin/dms-tasks:0.1.2
 # docker push mdanshin/dms-tasks:latest
 
 ########## STAGE 1 ##########
@@ -15,7 +16,8 @@
 #############################
 FROM node as builder
 
-ENV REACT_APP_API_URL=http://localhost:5000/api
+ARG REACT_APP_API_URL=http://localhost:5000/api
+ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 
 WORKDIR /dms-tasks-client
 

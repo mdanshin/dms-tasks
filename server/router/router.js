@@ -10,9 +10,8 @@ router.get('/status', (req, res) => {
   res.json({ status: 'healthy', serverDateTime: Date() })
 })
 
-
 router.post('/completetask/:id', taskController.completeTask)
-router.post('/addtask', taskController.addTask)
+router.post('/addtask', taskController.addTask) 
 router.post('/updatetask/:id', taskController.updateTask)
 
 export default router

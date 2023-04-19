@@ -4,7 +4,7 @@ CONTAINER_NAME="dms-tasks-dev"
 
 DB_PATH=~/dms-tasks/db
 
-BASE_URL="http://localhost"
+BASE_URL="http://172.28.213.160"
 API="api"
 
 SITE_PORT=80
