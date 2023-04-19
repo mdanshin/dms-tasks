@@ -13,7 +13,7 @@ API_PORT=5000
 cd ..
 docker stop ${CONTAINER_NAME}
 docker rm ${CONTAINER_NAME}
-docker system prune -a
+# docker system prune -a
 
 docker build --build-arg REACT_APP_API_URL="${BASE_URL}:${API_PORT}/${API}" \
 -t ${IMAGE_NAME} .

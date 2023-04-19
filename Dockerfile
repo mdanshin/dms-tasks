@@ -6,9 +6,9 @@
 
 ###FOR PUB###
 # docker login
-# docker tag dms-tasks:latest mdanshin/dms-tasks:latest
-# docker tag dms-tasks:latest mdanshin/dms-tasks:0.1.2
-# docker push mdanshin/dms-tasks:0.1.2
+# docker tag dms-tasks mdanshin/dms-tasks:latest
+# docker tag dms-tasks mdanshin/dms-tasks:0.1.2
+# docker push mdanshin/dms-tasks:0.1.2 mdanshin/dms-tasks:latest
 # docker push mdanshin/dms-tasks:latest
 
 ########## STAGE 1 ##########

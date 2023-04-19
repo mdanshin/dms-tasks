@@ -1,6 +1,6 @@
 #!/bin/bash
-IMAGE_NAME="dms-tasks:dev"
-CONTAINER_NAME="dms-tasks-dev"
+IMAGE_NAME="dms-tasks"
+CONTAINER_NAME="dms-tasks"
 
 DB_PATH=~/dms-tasks/db
 
