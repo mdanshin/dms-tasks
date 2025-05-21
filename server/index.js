@@ -4,6 +4,9 @@ import router from './router/router.js'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 
+if (!process.env.mongoUri) throw new Error('mongoUri не задан в .env')
+if (!process.env.CLIENT_URL) throw new Error('CLIENT_URL не задан в .env')
+  
 const app = express()
 const { urlencoded, json } = bodyParser
 
