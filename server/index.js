@@ -6,7 +6,7 @@ import mongoose from 'mongoose'
 
 if (!process.env.mongoUri) throw new Error('mongoUri не задан в .env')
 if (!process.env.CLIENT_URL) throw new Error('CLIENT_URL не задан в .env')
-  
+
 const app = express()
 const { urlencoded, json } = bodyParser
 
@@ -28,18 +28,16 @@ app.use(cors(corsOptions))
 
 app.use('/api', router)
 
+
 const start = async () => {
-  console.log('Connecting to database...')
+  console.log(`[${new Date().toISOString()}] Connecting to database...`)
   try {
-    mongoose.connect(process.env.mongoUri, mongoOptions)
-
-    console.log('PORT', process.env.PORT)
-    console.log('CLIENT_URL', process.env.CLIENT_URL)
-    console.log('mongoUri', process.env.mongoUri)
-
-    app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
+    await mongoose.connect(process.env.mongoUri, mongoOptions)
+    console.log(`[${new Date().toISOString()}] DB connected`)
+    app.listen(PORT, () => console.log(`[${new Date().toISOString()}] Server is running on port ${PORT}`))
   } catch (e) {
     console.error(e)
+    process.exit(1)
   }
 }
 
