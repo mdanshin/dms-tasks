@@ -13,7 +13,7 @@ export default class TaskService {
 
   static async getTaskById(id) {
     try {
-      return await $api.get(`/task/${id}`)
+      return await $api.get(`/tasks/${id}`)
     } catch (error) {
       if (error.response) {
         throw error.response
@@ -23,7 +23,7 @@ export default class TaskService {
 
   static async addTask(data) {
     try {
-      const task = await $api.post('/addtask', {
+      const task = await $api.post('/tasks', {
         method: 'POST',
         body: data,
         headers: {
@@ -40,7 +40,7 @@ export default class TaskService {
 
   static async udateTask(id, data) {
     try {
-      return await $api.post('/updatetask/' + id, {
+      return await $api.put('/tasks/' + id, {
         method: 'POST',
         body: data,
         headers: {
@@ -56,7 +56,7 @@ export default class TaskService {
 
   static async completeTask(id, data) {
     try {
-      return await $api.post('/completetask/' + id, {
+      return await $api.patch('/tasks/' + id + '/complete', {
         method: 'POST',
         body: data,
         headers: {

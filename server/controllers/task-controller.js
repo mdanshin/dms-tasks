@@ -3,7 +3,10 @@ import taskService from '../services/task-service.js'
 class TaskController {
   async addTask(req, res, next) {
     try {
-      const result = await taskService.addTask(req.body.body)
+      if (!req.body) {
+        return res.status(400).json({ message: 'No task data provided' })
+      }
+      const result = await taskService.addTask(req.body)
       return res.json(result)
     } catch (e) {
       next(e)
@@ -13,7 +16,8 @@ class TaskController {
   async updateTask(req, res, next) {
     try {
       const id = req.params.id
-      await taskService.updateTask(id, req.body.body)
+      const updatedTask = await taskService.updateTask(id, req.body)
+      return res.json(updatedTask)
     } catch (e) {
       next(e)
     }
@@ -29,10 +33,12 @@ class TaskController {
   }
 
   async getTaskById(req, res, next) {
-    const id = req.params.id
-
     try {
+      const id = req.params.id
       const task = await taskService.getTaskById(id)
+      if (!task) {
+        return res.status(404).json({ message: 'Task not found' })
+      }
       return res.json(task)
     } catch (e) {
       next(e)
@@ -42,8 +48,21 @@ class TaskController {
   async completeTask(req, res, next) {
     try {
       const id = req.params.id
-      const task = await taskService.completeTask(id, req.body.body)
+      const task = await taskService.completeTask(id, req.body)
       return res.json(task)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  async deleteTask(req, res, next) {
+    try {
+      const id = req.params.id
+      const deletedTask = await taskService.deleteTask(id)
+      if (!deletedTask) {
+        return res.status(404).json({ message: 'Task not found' })
+      }
+      return res.json({ message: 'Task deleted', task: deletedTask })
     } catch (e) {
       next(e)
     }

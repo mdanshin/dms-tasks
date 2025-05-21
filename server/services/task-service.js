@@ -2,12 +2,15 @@ import TaskModel from '../models/task-model.js'
 
 class TaskService {
   async addTask(data) {
+    const { body } = data
+    if (!body || !body.name) {
+      throw new Error('Task name is required')
+    }
     try {
-      console.log({...data})
-      const task = await TaskModel.create({ ...data })
+      const task = await TaskModel.create({ ...body })
       return task
     } catch (e) {
-      throw new Error(e)
+      throw e
     }
   }
 
@@ -17,7 +20,9 @@ class TaskService {
   }
 
   async updateTask(id, data) {
-    await TaskModel.findOneAndUpdate({ "_id": id }, { ...data })
+    const { body } = data
+    const { _id, ...updateData } = body
+    return TaskModel.findByIdAndUpdate(id, updateData, { new: true })
   }
 
   async getTaskById(id) {
@@ -26,7 +31,14 @@ class TaskService {
   }
 
   async completeTask(id, data) {
-    await TaskModel.findOneAndUpdate({ "_id": id }, { ...data })
+    const { body } = data
+    const { _id, ...updateData } = body
+    return TaskModel.findByIdAndUpdate(id, updateData, { new: true })
+  }
+
+  async deleteTask(id) {
+    //не реализовано на фронте
+    return TaskModel.findByIdAndDelete(id)
   }
 }
 
