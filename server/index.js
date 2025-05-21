@@ -28,7 +28,6 @@ app.use(cors(corsOptions))
 
 app.use('/api', router)
 
-
 const start = async () => {
   console.log(`[${new Date().toISOString()}] Connecting to database...`)
   try {
