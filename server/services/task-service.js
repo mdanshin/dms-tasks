@@ -3,7 +3,8 @@ import TaskModel from '../models/task-model.js'
 class TaskService {
   async addTask(data) {
     try {
-      const task = await TaskModel.create({ ...data.body })
+      console.log({...data})
+      const task = await TaskModel.create({ ...data })
       return task
     } catch (e) {
       throw new Error(e)
@@ -16,7 +17,7 @@ class TaskService {
   }
 
   async updateTask(id, data) {
-    await TaskModel.findOneAndUpdate({ "_id": id }, { ...data.body })
+    await TaskModel.findOneAndUpdate({ "_id": id }, { ...data })
   }
 
   async getTaskById(id) {
@@ -25,7 +26,7 @@ class TaskService {
   }
 
   async completeTask(id, data) {
-    await TaskModel.findOneAndUpdate({ "_id": id }, { ...data.body })
+    await TaskModel.findOneAndUpdate({ "_id": id }, { ...data })
   }
 }
 

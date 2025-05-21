@@ -3,7 +3,7 @@ import taskService from '../services/task-service.js'
 class TaskController {
   async addTask(req, res, next) {
     try {
-      const result = await taskService.addTask(req.body)
+      const result = await taskService.addTask(req.body.body)
       return res.json(result)
     } catch (e) {
       next(e)
@@ -13,7 +13,7 @@ class TaskController {
   async updateTask(req, res, next) {
     try {
       const id = req.params.id
-      await taskService.updateTask(id, req.body)
+      await taskService.updateTask(id, req.body.body)
     } catch (e) {
       next(e)
     }
@@ -42,7 +42,7 @@ class TaskController {
   async completeTask(req, res, next) {
     try {
       const id = req.params.id
-      const task = await taskService.completeTask(id, req.body)
+      const task = await taskService.completeTask(id, req.body.body)
       return res.json(task)
     } catch (e) {
       next(e)
