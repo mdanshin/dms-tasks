@@ -6,51 +6,59 @@ import { actions } from './todo-actions'
 export const TodoContext = createContext();
 
 export const Provider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer);
-    const { fetchTodo } = useFetchTodo()
+  const [state, dispatch] = useReducer(reducer);
+  const { fetchTodo } = useFetchTodo()
 
-    useEffect(() => {
-        fetchTodo().then(todos => {
-            const data = todos.data
-            dispatch({ type: actions.INIT, data })
-        })
-    }, [fetchTodo])
+  useEffect(() => {
+    fetchTodo().then(todos => {
+      const data = todos.data
+      dispatch({ type: actions.INIT, data })
+    })
+  }, [fetchTodo])
 
-    const value = {
-        todoList: state,
+  // Новая функция для обновления списка задач с сервера
+  const refreshTodos = async () => {
+    const todos = await fetchTodo();
+    const data = todos.data;
+    dispatch({ type: actions.INIT, data });
+  };
 
-        addTodoItem: (todoItemLabel) => {
-            dispatch({
-                type: actions.ADD_TODO_ITEM,
-                todoItemLabel
-            })
-        },
+  const value = {
+    todoList: state,
 
-        removeTodoItem: (todoItemId) => {
-            dispatch({
-                type: actions.REMOVE_TODO_ITEM,
-                todoItemId
-            })
-        },
+    addTodoItem: (todoItemLabel) => {
+      dispatch({
+        type: actions.ADD_TODO_ITEM,
+        todoItemLabel
+      })
+    },
 
-        markAsCompleted: (todoItemId) => {
-            dispatch({
-                type: actions.TOGGLE_COMPLETED,
-                todoItemId
-            })
-        },
+    removeTodoItem: (todoItemId) => {
+      dispatch({
+        type: actions.REMOVE_TODO_ITEM,
+        todoItemId
+      })
+    },
 
-        update: (todoItem) => {
-            dispatch({
-                type: actions.UPDATE,
-                todoItem
-            })
-        }
-    };
+    markAsCompleted: (todoItemId) => {
+      dispatch({
+        type: actions.TOGGLE_COMPLETED,
+        todoItemId
+      })
+    },
 
-    return (
-        <TodoContext.Provider value={value}>
-            {children}
-        </TodoContext.Provider>
-    );
+    update: (todoItem) => {
+      dispatch({
+        type: actions.UPDATE,
+        todoItem
+      })
+    },
+    refreshTodos, // <-- добавили сюда
+  };
+
+  return (
+    <TodoContext.Provider value={value}>
+      {children}
+    </TodoContext.Provider>
+  );
 };

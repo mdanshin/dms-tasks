@@ -8,6 +8,11 @@ const TaskSchema = new Schema({
   summary: { type: String, default: '' },
   description: { type: String, default: '' },
   plannedFinishDate: { type: Date }, // новое поле: дата планируемого завершения
+  priority: {
+    type: String,
+    enum: ['high', 'middle', 'low'],
+    default: 'middle'
+  }
 })
 
 export default model('Task', TaskSchema)

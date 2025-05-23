@@ -11,11 +11,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { TodoContext } from "../../context/todo-context";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import MenuItem from '@mui/material/MenuItem';
 
 export default function EditTaskForm() {
   let { id } = useParams();
 
-  const { update } = React.useContext(TodoContext);
+  const { refreshTodos } = React.useContext(TodoContext);
   const [todo, setTodo] = useState({ name: '', summary: '', description: '' })
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
@@ -42,12 +43,15 @@ export default function EditTaskForm() {
     }
   }
 
-  function submitHandler(event) {
-    event.preventDefault()
-    setTodo(todo)
-    TaskService.udateTask(id, todo)
-    update(todo)
-    navigate('/')
+  async function submitHandler(event) {
+    event.preventDefault();
+    try {
+      await TaskService.updateTask(id, todo);
+      await refreshTodos(); // обновить список задач в контексте
+      navigate('/');
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return (
@@ -108,6 +112,28 @@ export default function EditTaskForm() {
                       value={todo.description}
                       onChange={changeHandler}
                     />
+                    {/* Priority select */}
+                    <TextField
+                      select
+                      margin="normal"
+                      fullWidth
+                      name="priority"
+                      label="Priority"
+                      id="priority"
+                      value={todo.priority || 'middle'}
+                      onChange={changeHandler}
+                      sx={{ mb: 2 }}
+                    >
+                      <MenuItem value="high" sx={{ color: 'red', fontWeight: 600 }}>
+                        🔴 High
+                      </MenuItem>
+                      <MenuItem value="middle" sx={{ color: 'orange', fontWeight: 500 }}>
+                        🟠 Middle
+                      </MenuItem>
+                      <MenuItem value="low" sx={{ color: 'green', fontWeight: 500 }}>
+                        🟢 Low
+                      </MenuItem>
+                    </TextField>
                     <TextField
                       margin="normal"
                       fullWidth

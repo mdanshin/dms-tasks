@@ -38,7 +38,7 @@ export default class TaskService {
     }
   }
 
-  static async udateTask(id, data) {
+  static async updateTask(id, data) {
     try {
       return await $api.put('/tasks/' + id, {
         method: 'POST',
